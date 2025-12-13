@@ -1,5 +1,7 @@
 # Fullstack Reference Application
 
+![Application screenshot](.screenshots/screen_1.png)
+
 ---
 
 ## 🧭 Who this project is for

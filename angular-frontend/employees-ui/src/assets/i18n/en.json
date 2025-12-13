@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Employees App",
+    "logout": "Log out",
+    "msg": "Logged in user"
+  },
+  "home": {
+    "title": "Home"
+  },
+  "login": {
+    "title": "Login",
+    "userName": "User name",
+    "pwd": "Password",
+    "msg": "Invalid username or password"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "msg": "The page you’re looking for doesn’t exist."
+  },
+  "employee": {
+    "title": "Employees",
+    "msg": {
+      "load": "Loading...",
+      "missingFirstName": "First name is required.",
+      "missingLastName": "Last name is required."
+    },
+    "actions": {
+      "home": "Go to home",
+      "list": "List of employees",
+      "add": "Create employee",
+      "edit": "Edit employee",
+      "delete": "Delete employee",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "role": "Role",
+      "actions": "Actions"
+    }
+  }
+}

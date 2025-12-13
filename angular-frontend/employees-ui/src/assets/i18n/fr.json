@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "Employés App",
+    "logout": "Se déconnecter",
+    "msg": "Utilisateur connecté"
+  },
+  "home": {
+    "title": "Accueil"
+  },
+  "login": {
+    "title": "Connexion",
+    "userName": "Nom d'utilisateur",
+    "pwd": "Mot de passe",
+    "msg": "Mauvais nom d'utilisateur ou mot de passe"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "msg": "La page que vous recherchez n’existe pas."
+  },
+  "employee": {
+    "title": "Employés",
+    "msg": {
+      "load": "Chargement...",
+      "missingFirstName": "Le prénom est requis.",
+      "missingLastName": "Le nom est requis."
+    },
+    "actions": {
+      "home": "Aller à l’accueil",
+      "list": "Liste des employés",
+      "add": "Créer un employé",
+      "edit": "Modifier un employé",
+      "delete": "Supprimer un employé",
+      "save": "Sauvegarder",
+      "cancel": "Annuler"
+    },
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "role": "Rôle",
+      "actions": "Actions"
+    }
+  }
+}

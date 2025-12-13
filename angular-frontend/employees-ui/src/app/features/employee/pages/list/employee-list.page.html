@@ -1,0 +1,70 @@
+<h3>{{ 'employee.title' | translate }}</h3>
+
+<nav class="page-actions">
+  <a routerLink="/home">{{ 'employee.actions.home' | translate }}</a>
+  <span class="sep">|</span>
+  <a routerLink="/employees/new">{{ 'employee.actions.add' | translate }}</a>
+</nav>
+
+@if (employeeListStore.loading()) {
+  <p>{{ 'employee.msg.load' | translate }}</p>
+} @else if (employeeListStore.error()) {
+  <mat-card class="error-card">{{ employeeListStore.error() }}</mat-card>
+} @else {
+  <table mat-table matSort class="mat-elevation-z2"
+         [dataSource]="employeeListStore.employees()"
+         (matSortChange)="applySort($event)">
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let employee">{{ employee.id }}</td>
+    </ng-container>
+
+    <!-- First Name -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'employee.fields.firstName' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let employee">{{ employee.firstName }}</td>
+    </ng-container>
+
+    <!-- Last Name -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'employee.fields.lastName' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let employee">{{ employee.lastName }}</td>
+    </ng-container>
+
+    <!-- Role -->
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'employee.fields.role' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let employee">{{ employee.role }}</td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'employee.fields.actions' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let employee">
+        <div class="action-buttons">
+          <button mat-stroked-button
+                  [routerLink]="['/employees', employee.id]">
+            {{ 'employee.actions.edit' | translate }}
+          </button>
+
+          <button mat-stroked-button class="btn-warn"
+                  (click)="delete(employee.id)">
+            {{ 'employee.actions.delete' | translate }}
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableColumnNames"></tr>
+    <tr mat-row *matRowDef="let row; columns: tableColumnNames;"></tr>
+  </table>
+}

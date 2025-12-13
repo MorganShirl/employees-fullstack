@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SbBackendApplication [postgres]" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="postgres" />
+    <module name="sb-backend" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.morgan.backend.SbBackendApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

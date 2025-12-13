@@ -1,0 +1,129 @@
+# CRUD employees test suite
+
+### Login and create session
+POST {{authUrl}}/login
+Content-Type: application/json
+
+{
+    "username": "{{username}}",
+    "password": "{{password}}"
+}
+
+> {%
+    client.assert(response.status === 200, `Expected 200, got ${response.status}`);
+%}
+
+### Bootstrap CSRF token (must run after login)
+GET {{authUrl}}/csrf
+
+> {%
+    client.assert(response.status === 200, `Expected 200, got ${response.status}`);
+
+    // Token comes from the JSON body: { "token": "..." }
+    const token = response.body.token;
+    client.assert(token, "No CSRF token found in /csrf response body");
+
+    client.global.set("xsrfToken", token);
+%}
+
+### Create malformed employee with missing required DTO field
+POST {{employeesUrl}}
+Content-Type: application/json
+X-XSRF-TOKEN: {{xsrfToken}}
+
+{
+    "lastName": "lastName",
+    "role": "role"
+}
+
+> {%
+    client.assert(response.status === 400, `Expected 400, got ${response.status}`);
+%}
+
+### Create employee
+POST {{employeesUrl}}
+Content-Type: application/json
+X-XSRF-TOKEN: {{xsrfToken}}
+
+{
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "role": "role"
+}
+
+> {%
+    client.assert(response.status === 201, `Expected 201, got ${response.status}`);
+    client.assert(response.body.id != null, `id must not be null, got ${response.body.id}`);
+    client.global.set("newEmployeeId", response.body.id);
+%}
+
+### Get employee
+GET {{employeesUrl}}/{{newEmployeeId}}
+
+> {%
+    client.assert(response.status === 200, `Expected 200, got ${response.status}`);
+    const newId = String(client.global.get("newEmployeeId"));
+    client.assert(String(response.body.id) === newId, `id must be equal to ${newId}, got ${response.body.id}`);
+%}
+
+### Get employees
+GET {{employeesUrl}}
+
+> {%
+    client.assert(response.status === 200, `Expected 200, got ${response.status}`);
+
+    // The body should be an array
+    client.assert(Array.isArray(response.body),
+        `Expected response body to be an array, got ${typeof response.body}`);
+
+    // Check array contains at least 1 element
+    client.assert(response.body.length >= 1,
+        `Expected array size >= 1, got ${response.body.length}`);
+
+    // Retrieve the expected ID (stored as string, convert to number)
+    const expectedId = Number(client.global.get("newEmployeeId"));
+
+    // Look for an item with this id
+    const found = response.body.some(emp => emp.id === expectedId);
+
+    client.assert(found, `Expected at least one employee with id=${expectedId}, but none found`);
+%}
+
+### Replace employee
+PUT {{employeesUrl}}/{{newEmployeeId}}
+Content-Type: application/json
+X-XSRF-TOKEN: {{xsrfToken}}
+
+{
+    "firstName": "firstName_{{newEmployeeId}}",
+    "lastName": "lastName_{{newEmployeeId}}",
+    "role": "role_{{newEmployeeId}}"
+}
+
+> {%
+    client.assert(response.status === 200, `Expected 200, got ${response.status}`);
+
+    const newId = String(client.global.get("newEmployeeId"));
+    client.assert(String(response.body.id) === newId, `id must be equal to ${newId}, got ${response.body.id}`);
+
+    const expectedFirstName = `firstName_${newId}`;
+    const expectedLastName  = `lastName_${newId}`;
+    const expectedRole      = `role_${newId}`;
+
+    client.assert(response.body.firstName === expectedFirstName,
+        `firstName must be ${expectedFirstName}, got ${response.body.firstName}`);
+
+    client.assert(response.body.lastName === expectedLastName,
+        `lastName must be ${expectedLastName}, got ${response.body.lastName}`);
+
+    client.assert(response.body.role === expectedRole,
+        `role must be ${expectedRole}, got ${response.body.role}`);
+%}
+
+### Delete employee
+DELETE {{employeesUrl}}/{{newEmployeeId}}
+X-XSRF-TOKEN: {{xsrfToken}}
+
+> {%
+    client.assert(response.status === 204, `Expected status 204, got ${response.status}`);
+%}

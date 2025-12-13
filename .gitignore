@@ -1,0 +1,23 @@
+# Backend
+**/target/
+**/logs/
+**/data/
+
+# Frontend
+**/frontendPlugin/
+**/node_modules/
+**/.angular/
+**/dist/
+
+# IntelliJ
+# Ignore everything in .idea
+.idea/*
+
+# Ignore IntelliJ module files
+*.iml
+
+# Re-allow specific files
+!.idea/dataSources.xml
+!.idea/runConfigurations/
+!.idea/runConfigurations/*.xml
+

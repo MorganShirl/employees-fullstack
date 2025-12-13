@@ -1,0 +1,68 @@
+<h3>
+  @if (id == null) {
+    {{ 'employee.actions.add' | translate }}
+  } @else {
+    {{ 'employee.actions.edit' | translate }} #{{ id }}
+  }
+</h3>
+
+<nav class="page-actions">
+  <a routerLink="/home">{{ 'employee.actions.home' | translate }}</a>
+  <span class="sep">|</span>
+  <a routerLink="/employees">{{ 'employee.actions.list' | translate }}</a>
+</nav>
+
+@if (loading()) {
+  <p>{{ 'employee.msg.load' | translate }}</p>
+} @else if (error()) {
+  <mat-card class="error-card">{{ error() }}</mat-card>
+}
+
+<mat-card class="form-card">
+  <form [formGroup]="employeeForm" (ngSubmit)="submit()">
+    <!-- First name -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ 'employee.fields.firstName' | translate }}</mat-label>
+      <input matInput id="firstName" formControlName="firstName" />
+      @if (employeeForm.controls.firstName.touched && employeeForm.controls.firstName.invalid) {
+        <mat-error>{{ 'employee.msg.missingFirstName' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Last name -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ 'employee.fields.lastName' | translate }}</mat-label>
+      <input matInput id="lastName" formControlName="lastName" />
+      @if (employeeForm.controls.lastName.touched && employeeForm.controls.lastName.invalid) {
+        <mat-error>{{ 'employee.msg.missingLastName' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Role -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ 'employee.fields.role' | translate }}</mat-label>
+      <input matInput id="role" formControlName="role" />
+    </mat-form-field>
+
+    <div class="action-buttons">
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="loading() || employeeForm.invalid"
+      >
+        {{ 'employee.actions.save' | translate }}
+      </button>
+
+      <button
+        mat-button
+        type="button"
+        [routerLink]="['/employees']"
+        [disabled]="loading()"
+      >
+        {{ 'employee.actions.cancel' | translate }}
+      </button>
+    </div>
+
+  </form>
+</mat-card>

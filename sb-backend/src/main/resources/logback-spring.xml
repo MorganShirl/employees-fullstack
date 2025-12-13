@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <!-- Show Logback internal diagnostics on startup (console) -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+    <!-- ==========================================
+         0. Spring Boot color and exception helpers
+         ========================================== -->
+    <conversionRule conversionWord="clr"
+                    class="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    class="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    class="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <!-- ==========================================
+         1. COMMON PROPERTIES / PATTERNS
+         ========================================== -->
+    <!-- Levels comes from the Spring application.yml -->
+    <springProperty name="ROOT_LEVEL" source="logging-level.root" defaultValue="INFO"/>
+    <springProperty name="CACHE_LEVEL" source="logging-level.cache" defaultValue="DEBUG"/>
+    <springProperty name="SQL_LEVEL" source="logging-level.sql" defaultValue="DEBUG"/>
+
+    <!-- Logs directory relative to sb-backend module -->
+    <property name="LOG_DIR" value="./logs"/>
+
+    <!-- Base pattern (used by both app.log and sql.log) -->
+    <!-- Includes MDC requestId: %X{requestId} -->
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [req:%X{requestId:- -}] %logger{36} - %msg%n%wEx"/>
+
+    <!-- Colored console pattern (same info, just with colors) -->
+    <property name="COLORED_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%-5level) %clr([%thread]){magenta} %clr([req:%X{requestId:- -}]){cyan} %clr(%logger{36}){blue} - %msg%n%wEx"/>
+
+    <!-- ==========================================
+         2. CONSOLE APPENDER (colored)
+         ========================================== -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${COLORED_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ==========================================
+         3. MAIN APPLICATION FILE APPENDER (app.log)
+         ========================================== -->
+    <appender name="APP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>10MB</maxFileSize>
+            <fileNamePattern>${LOG_DIR}/app.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ==========================================
+         4. SQL FILE APPENDER (sql.log)
+         ========================================== -->
+    <appender name="SQL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>10MB</maxFileSize>
+            <fileNamePattern>${LOG_DIR}/sql.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ==========================================
+         5. JSON FILE APPENDER (app-json.log)
+         ========================================== -->
+    <appender name="APP_JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>10MB</maxFileSize>
+            <fileNamePattern>${LOG_DIR}/app-json.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <!-- JSON encoder from logstash-logback-encoder -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- Optional: add a field present in all log lines -->
+            <customFields>{"app_name":"sb-backend"}</customFields>
+        </encoder>
+    </appender>
+
+    <!-- ==========================================
+         6. LOGGERS
+         ========================================== -->
+
+    <!-- Cache logs: Spring cache abstraction -->
+    <logger name="org.springframework.cache" level="${CACHE_LEVEL}" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="APP_FILE"/>
+    </logger>
+
+    <!-- Caffeine internals: can be very noisy, keep at DEBUG and no APP_FILE -->
+    <logger name="com.github.benmanes.caffeine.cache" level="${CACHE_LEVEL}" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="APP_FILE"/>
+    </logger>
+
+    <!-- SQL / Hibernate / JDBC logs → sql.log + console, not app.log -->
+    <logger name="org.hibernate.SQL" level="${SQL_LEVEL}" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SQL_FILE"/>
+    </logger>
+
+    <logger name="org.hibernate.orm.jdbc.bind" level="${SQL_LEVEL}" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SQL_FILE"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc.core" level="${SQL_LEVEL}" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SQL_FILE"/>
+    </logger>
+
+    <!-- ==============================
+         7. ROOT LOGGERS PER PROFILE
+         ============================== -->
+
+    <!-- Non-prod (dev, test, etc.): console + text file -->
+    <springProfile name="!prod">
+        <root level="${ROOT_LEVEL}">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="APP_FILE"/>
+            <appender-ref ref="APP_JSON_FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

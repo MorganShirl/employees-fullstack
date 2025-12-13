@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SbBackendApplication [default h2]" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="sb-backend" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.morgan.backend.SbBackendApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

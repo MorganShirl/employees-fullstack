@@ -1,0 +1,20 @@
+.error-snackbar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.error-snackbar__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 4px;
+}
+
+.error-snackbar__close {
+  border: 1px solid var(--mat-sys-primary);
+  color: var(--app-warn);
+  font-weight: 600;
+  cursor: pointer;
+  height: 30px;
+}

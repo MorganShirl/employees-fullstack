@@ -1,0 +1,9 @@
+spring:
+  h2:
+    console:
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/employees_db
+    username: appuser
+    password: secretpassword
+    driver-class-name: org.postgresql.Driver

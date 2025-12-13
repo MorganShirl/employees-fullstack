@@ -1,0 +1,32 @@
+<mat-toolbar class="app-toolbar">
+  <div class="title-row">
+    <span class="app-title">{{ 'app.title' | translate }}</span>
+  </div>
+
+  <div class="action-buttons">
+    <!-- Language buttons -->
+    <button mat-stroked-button color="primary"
+            [class.lang-selected]="isCurrentLang('en')"
+            (click)="switchLang('en')">EN</button>
+    <button mat-stroked-button color="primary"
+            [class.lang-selected]="isCurrentLang('fr')"
+            (click)="switchLang('fr')">FR</button>
+
+    <!-- Show username/email when logged in -->
+    @if (isLoggedIn()) {
+      <div class="user-section">
+        <span>
+          {{ 'app.msg' | translate }}:&nbsp;<strong>{{ username() }}</strong>,&nbsp;email:&nbsp;<strong>{{ email() }}</strong>
+        </span>
+        <button mat-stroked-button color="warn"
+                (click)="logout()">
+          {{ 'app.logout' | translate }}
+        </button>
+      </div>
+    }
+  </div>
+</mat-toolbar>
+
+<main class="app-content">
+  <router-outlet />
+</main>

@@ -1,0 +1,28 @@
+<h3>{{ 'login.title' | translate }}</h3>
+
+@if (error()) {
+  <mat-card class="error-card">{{ error() | translate }}</mat-card>
+}
+
+<mat-card class="form-card">
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ 'login.userName' | translate }}</mat-label>
+      <input matInput id="username" formControlName="username" autocomplete="username">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ 'login.pwd' | translate }}</mat-label>
+      <input matInput type="password" formControlName="password" autocomplete="current-password">
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loading() || loginForm.invalid"
+    >
+      {{ 'login.title' | translate }}
+    </button>
+  </form>
+</mat-card>

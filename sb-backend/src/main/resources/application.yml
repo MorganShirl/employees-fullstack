@@ -1,0 +1,72 @@
+server:
+  port: 8090  # Main application port
+
+#Actuator
+management:
+  server:
+    port: 9090  # Actuator runs on its own port!
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # expose everything
+  endpoint:
+    health:
+      show-details: always  # Useful for more detailed health info
+
+spring:
+  application:
+    name: sb-backend
+  threads:
+    virtual:
+      enabled: true # enable use of virtual threads for http requests
+  h2:
+    console:
+      enabled: true # true to enable it
+      settings:
+        web-allow-others: false # only accessible from localhost
+      path: /h2
+  datasource:
+    # AUTO_SERVER=TRUE → allows multiple processes (Spring Boot, H2 console, IntelliJ inspector) to connect
+    # DB_CLOSE_DELAY=-1 → DB stays alive even if all connections close
+    url: jdbc:h2:file:./data/employees_db;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update # to create/update the employee table if it doesn't exist
+  mvc:
+    problemdetails:
+      enabled: true
+  cache:
+    cache-names:
+      - employeesAll
+      - employeesById
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=5m
+    type: caffeine
+
+# Enable CSRF support in Swagger UI so "Try it out" can send X-XSRF-TOKEN
+springdoc:
+  swagger-ui:
+    csrf:
+      enabled: true
+
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
+######
+## Custom properties
+######
+
+# for CORS policy
+app:
+  cors:
+    allowed-origins:
+      - http://localhost:4200
+
+logging-level:
+  root: INFO
+  cache: DEBUG
+  sql: DEBUG

@@ -1,0 +1,20 @@
+### Get all actuators
+GET {{actuatorUrl}}
+
+### Info
+GET {{actuatorUrl}}/info
+
+### Beans
+GET {{actuatorUrl}}/beans
+
+### Config properties
+GET {{actuatorUrl}}/configprops
+
+### Environment
+GET {{actuatorUrl}}/env
+
+### Mappings
+GET {{actuatorUrl}}/mappings
+
+### Caches
+GET {{actuatorUrl}}/caches

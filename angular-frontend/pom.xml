@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Inherit from the parent, which inherits from Spring Boot -->
+    <parent>
+        <groupId>com.morgan</groupId>
+        <artifactId>employees-fullstack</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>angular-frontend</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <frontend-maven-plugin.version>1.15.4</frontend-maven-plugin.version>
+        <!-- Angular project root directory -->
+        <working.dir>employees-ui</working.dir>
+        <!-- Node version compatible with Angular 20 -->
+        <node.version>v22.12.0</node.version>
+        <!-- where frontend-maven-plugin installs Node/npm -->
+        <frontend.install.dir>frontendPlugin</frontend.install.dir>
+        <!-- dist/browser folder for the built Angular app (set in angular.json outputPath) -->
+        <frontend.dist.dir>${working.dir}/dist/browser</frontend.dist.dir>
+    </properties>
+
+    <build>
+        <resources>
+            <!-- Package the built Angular files into META-INF/resources inside this JAR -->
+            <resource>
+                <directory>${frontend.dist.dir}</directory>
+                <targetPath>META-INF/resources</targetPath>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-maven-plugin.version}</version>
+
+                <configuration>
+                    <workingDirectory>${working.dir}</workingDirectory>
+                    <nodeVersion>${node.version}</nodeVersion>
+                    <installDirectory>${frontend.install.dir}</installDirectory>
+                </configuration>
+
+                <executions>
+                    <!-- 1. Downloads and install Node + npm locally for the frontend build -->
+                    <execution>
+                        <id>install-node-and-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <!-- 2. npm install -->
+                    <execution>
+                        <id>npm-install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <!-- 3. npm run build -->
+                    <execution>
+                        <id>npm-build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

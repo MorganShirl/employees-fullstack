@@ -56,7 +56,7 @@ The frontend can also be run independently and communicate with the backend, mak
 - SPA fallback routing to support client-side routes (frontend-managed 404s)
 - Custom logging configuration with separate application and SQL log files (see [logback-spring.xml](./sb-backend/src/main/resources/logback-spring.xml))
     - Log level for these files are configured centrally in [application.yml](./sb-backend/src/main/resources/application.yml)
-    - Each request is tagged with a unique request ID using MDC
+    - Each request is tagged with a unique request ID using MDC (see [MdcRequestIdFilter.java](./sb-backend/src/main/java/com/morgan/backend/filters/MdcRequestIdFilter.java)  )
 - Comprehensive testing setup:
     - Unit tests with **Mockito**
     - MockMvc tests

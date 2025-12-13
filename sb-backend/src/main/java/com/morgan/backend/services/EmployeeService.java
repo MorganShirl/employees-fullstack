@@ -16,16 +16,19 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
+    public static final String CACHE_EMPLOYEES_ALL = "employeesAll";
+    public static final String CACHE_EMPLOYEES_BY_ID = "employeesById";
+
     private final EmployeeRepository employeeRepository;
 
     // Cache for read operations
-    @Cacheable("employeesAll")
+    @Cacheable(CACHE_EMPLOYEES_ALL)
     public List<Employee> findAll() {
         log.info("DB hit for findAll");
         return employeeRepository.findAll();
     }
 
-    @Cacheable(cacheNames = "employeesById", key = "#id")
+    @Cacheable(cacheNames = CACHE_EMPLOYEES_BY_ID, key = "#id")
     public Employee findById(Long id) {
         log.info("DB hit for findById {}", id);
         return employeeRepository.findById(id)
@@ -33,12 +36,12 @@ public class EmployeeService {
     }
 
     // Evict for write operations
-    @CacheEvict(cacheNames = {"employeesAll", "employeesById"}, allEntries = true)
+    @CacheEvict(cacheNames = {CACHE_EMPLOYEES_ALL, CACHE_EMPLOYEES_BY_ID}, allEntries = true)
     public Employee create(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    @CacheEvict(cacheNames = {"employeesAll", "employeesById"}, allEntries = true)
+    @CacheEvict(cacheNames = {CACHE_EMPLOYEES_ALL, CACHE_EMPLOYEES_BY_ID}, allEntries = true)
     public Employee upsert(Long id, Employee employeeEntity) {
         return employeeRepository.findById(id)
             .map(existing -> {
@@ -53,7 +56,7 @@ public class EmployeeService {
             });
     }
 
-    @CacheEvict(cacheNames = {"employeesAll", "employeesById"}, allEntries = true)
+    @CacheEvict(cacheNames = {CACHE_EMPLOYEES_ALL, CACHE_EMPLOYEES_BY_ID}, allEntries = true)
     public void delete(Long id) {
         if (!employeeRepository.existsById(id)) {
             throw new EmployeeNotFoundException(id);

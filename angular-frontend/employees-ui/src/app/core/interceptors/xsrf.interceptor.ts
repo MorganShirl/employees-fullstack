@@ -2,46 +2,50 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { getCookie } from '@shared/utils/cookie.util';
 
+const XSRF_HEADER_NAME = 'X-XSRF-TOKEN';
+const XSRF_COOKIE_NAME = 'XSRF-TOKEN';
+
+const MUTATING_HTTP_METHODS = new Set([
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE'
+]);
+
 // Normalize apiBaseUrl once (remove trailing slash if present)
-const apiBaseUrl = environment.apiBaseUrl.replace(/\/+$/, '');
+const API_BASE_URL = environment.apiBaseUrl.replace(/\/+$/, '');
+
+const isMutatingRequest = (method: string): boolean =>
+    MUTATING_HTTP_METHODS.has(method);
+
+// Only send XSRF header to *our* backend, defined by apiBaseUrl
+const isApiRequest = (url: string): boolean =>
+    url.startsWith(API_BASE_URL + '/');
 
 export const xsrfInterceptor: HttpInterceptorFn = (req, next) => {
-    // only care about mutating requests
-    const isMutating = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method);
-    if (!isMutating) {
+    if (!isMutatingRequest(req.method)) {
         return next(req);
     }
 
-    // Only send XSRF header to *our* backend, defined by apiBaseUrl
-    // Works for:
-    //   - proxy mode: apiBaseUrl = "/api"  → URLs like "/api/..."
-    //   - CORS mode:  apiBaseUrl = "http://host:port/api" → URLs like "http://host:port/api/..."
-    const url = req.url;
-    const isApiCall =
-        url === apiBaseUrl ||
-        url.startsWith(apiBaseUrl + '/') ||
-        // small extra: if apiBaseUrl is relative, still allow bare "/api" vs "api"
-        (apiBaseUrl.startsWith('/') && url.startsWith(apiBaseUrl));
-
-    if (!isApiCall) {
+    if (!isApiRequest(req.url)) {
         return next(req);
     }
 
     // do not override if already set for some reason
-    if (req.headers.has('X-XSRF-TOKEN')) {
+    if (req.headers.has(XSRF_HEADER_NAME)) {
         return next(req);
     }
 
-    const token = getCookie('XSRF-TOKEN');
+    const token = getCookie(XSRF_COOKIE_NAME);
     if (!token) {
         return next(req);
     }
 
-    const cloned = req.clone({
-        setHeaders: {
-            'X-XSRF-TOKEN': token
-        }
-    });
-
-    return next(cloned);
+    return next(
+        req.clone({
+            setHeaders: {
+                [XSRF_HEADER_NAME]: token
+            }
+        })
+    );
 };

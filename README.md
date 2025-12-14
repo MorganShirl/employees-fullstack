@@ -1,10 +1,10 @@
-# Fullstack Reference Application
+# Fullstack Reference Application (Spring Boot 4 · Java 25 · Angular 20)
 [![CI](https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml/badge.svg)](
 https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 )
 
-![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-6DB33F?logo=springboot&logoColor=white)
+![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
 ![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white)
 
 ![Application screenshot](.screenshots/screen_1.png)
@@ -19,18 +19,18 @@ https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 
 ## 🎯 Project Goal
 
-This project is a **minimal but production-oriented reference application** intended to kickstart modern fullstack development using:
+This project is a **minimal but production-oriented reference application** intended to kickstart modern fullstack development.
 
-- Java 25
-- Spring Boot 4
-- Angular 20
+The project also demonstrates real-world security concerns such as
+**session-based authentication, CSRF/XSRF protection, and CORS vs proxy-based setups**
+between an Angular frontend and a Spring Boot backend.  
 
 The emphasis is on **clarity, correctness, and modern best practices**, with sensible defaults and configuration files that include **only what is strictly required** for the application to run correctly.  
 
 In particular, the POM files, `.gitignore`, and `.editorconfig` are intentionally kept minimal and explicit.  
 
 The project uses the **Maven Wrapper** and a frontend Maven plugin to provision all required tooling locally.  
-As a result, the only prerequisite to build and run the project is a **Java 25 JDK**.  
+As a result, the only prerequisite to build and run the project is a **Java 25 JDK**.
 
 The project was developed using **IntelliJ IDEA Ultimate 2025**.  
 While other IDEs can be used, **IntelliJ** is recommended, as the repository includes IDE-specific run configurations and database connection files that are referenced in the `Local Development` section below.

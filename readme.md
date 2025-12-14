@@ -65,18 +65,19 @@ The frontend can also be run independently and communicate with the backend, mak
     - Log level for these files are configured centrally in [application.yml](./sb-backend/src/main/resources/application.yml)
     - Each request is tagged with a unique request ID using MDC (see [MdcRequestIdFilter.java](./sb-backend/src/main/java/com/morgan/backend/filters/MdcRequestIdFilter.java))
 - Comprehensive testing setup:
-    - Unit tests with **Mockito**
-    - MockMvc tests
-    - Spring Boot integration tests
-    - IntelliJ HTTP Requests integration tests
+    - Unit tests with **Mockito** (see [EmployeeServiceTest.java](./sb-backend/src/test/java/com/morgan/backend/services/EmployeeServiceTest.java))
+    - **MockMvc** tests (see [EmployeeControllerTest.java](./sb-backend/src/test/java/com/morgan/backend/controllers/EmployeeControllerTest.java))
+    - **Spring Boot integration tests** (see [AppInfoControllerIT.java](./sb-backend/src/test/java/com/morgan/backend/controllers/AppInfoControllerIT.java) and [EmployeeServiceIT.java](./sb-backend/src/test/java/com/morgan/backend/services/EmployeeServiceIT.java))
+    - **IntelliJ HTTP Requests** integration tests (see [crud-employees-test.http](.httpRequests/crud-employees-test.http))
 
 ### 🅰️ Frontend (Angular 20)
 - Clean and predictable directory structure
+- TypeScript strict compiler options (see [tsconfig.json](./angular-frontend/employees-ui/tsconfig.json))
 - TypeScript path aliases (`@env`, `@core`, `@shared`, `@features`) for readable and maintainable imports (see [tsconfig.json](./angular-frontend/employees-ui/tsconfig.json))
-- Standalone components
 - Angular **signals** for component-level state management (see [employee-list.store.ts](./angular-frontend/employees-ui/src/app/features/employee/pages/list/employee-list.store.ts))
+- Standalone components like [employee-list.page.ts](./angular-frontend/employees-ui/src/app/features/employee/pages/list/employee-list.page.ts) that use a dedicated service [employee-api.service.ts](./angular-frontend/employees-ui/src/app/core/services/employee-api.service.ts)
 - Angular Material integration with view transition effects (e.g. `withViewTransitions`) for smoother navigation (see [app.config.ts](./angular-frontend/employees-ui/src/app/app.config.ts))
-- Optional Angular development proxy to demonstrate CORS vs same-origin setups via environment-based configuration (see [environment.ts](./angular-frontend/employees-ui/src/environments/environment.ts) and [environment.proxy.ts](./angular-frontend/employees-ui/src/environments/environment.proxy.ts))
+- Optional Angular development proxy to demonstrate CORS vs same-origin setups via environment-based configuration (see [environment.ts](./angular-frontend/employees-ui/src/environments/environment.ts) and [environment.proxy.ts](./angular-frontend/employees-ui/src/environments/environment.proxy.ts) and [proxy.conf.json](./angular-frontend/employees-ui/proxy.conf.json))
 - Client-side custom 404 page (see [not-found.page.html](./angular-frontend/employees-ui/src/app/shared/pages/404/not-found.page.html))
 - Automatic restoration of an existing backend session on application startup or page refresh (see `provideAppInitializer` in [app.config.ts](./angular-frontend/employees-ui/src/app/app.config.ts))
 - Multilingual support (English and French), including UI text and browser tab titles (see [app.config.ts](./angular-frontend/employees-ui/src/app/app.config.ts) and [i18n-title-strategy.ts](./angular-frontend/employees-ui/src/app/core/i18n/i18n-title-strategy.ts))
@@ -84,7 +85,7 @@ The frontend can also be run independently and communicate with the backend, mak
     - maps backend `ProblemDetail` responses
     - logs errors to the console
     - displays user-friendly messages via snackbars (see [notification.service.ts](./angular-frontend/employees-ui/src/app/core/services/notification.service.ts))
-- Route guards enforcing authentication and redirecting unauthenticated users to the login page (see [auth.guard.ts](./angular-frontend/employees-ui/src/app/core/guards/auth.guard.ts))
+- Route guards enforcing authentication and redirecting unauthenticated users to the login page (see [auth.guard.ts](./angular-frontend/employees-ui/src/app/core/guards/auth.guard.ts) and [app.routes.ts](./angular-frontend/employees-ui/src/app/app.routes.ts))
 - **XSRF/CSRF** token forwarding via a custom Http interceptor (see [xsrf.interceptor.ts](./angular-frontend/employees-ui/src/app/core/interceptors/xsrf.interceptor.ts)) that reads the XSRF-TOKEN cookie and attaches it as X-XSRF-TOKEN only for backend API calls (supports proxy and CORS setups). 
 
 ---
@@ -101,6 +102,12 @@ These commands are for Windows:
 ```bash
    ./mvnw.cmd clean install
 ```
+
+On a Linux machine you can use:  
+```bash
+   ./mvnw clean install
+```
+
 Or you can use the IntelliJ maven run config:  
 👉 [employees-fullstack \[clean,install\]](./.idea/runConfigurations/employees_fullstack__clean_install_.xml)
 

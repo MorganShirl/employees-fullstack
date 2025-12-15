@@ -27,9 +27,19 @@ It demonstrates real-world security concerns, including:
 - CSRF / XSRF protection
 - CORS vs proxy-based setups between an Angular frontend and a Spring Boot backend
 
-The emphasis is on **clarity, correctness, and modern best practices**, with sensible defaults and configuration files that include **only what is strictly required** for the application to run correctly.  
+The emphasis is on **clarity, correctness, and modern best practices**, with sensible defaults and configuration files that include **only what is strictly required** for the application to run correctly.
 
-In particular, the POM files, `.gitignore`, and `.editorconfig` are intentionally kept **minimal and explicit**.  
+In particular, the POM files, 
+[.gitignore](./.gitignore), 
+[.editorconfig](./.editorconfig), 
+[application.yml](./sb-backend/src/main/resources/application.yml), 
+[application-postgres.yml](./sb-backend/src/main/resources/application-postgres.yml), 
+[angular.json](./angular-frontend/employees-ui/angular.json), 
+[tsconfig.json](./angular-frontend/employees-ui/tsconfig.json), 
+[app.config.ts](./angular-frontend/employees-ui/src/app/app.config.ts), 
+[styles.scss](./angular-frontend/employees-ui/src/styles.scss) 
+are intentionally kept **minimal and explicit**.  
+In other words, there is no dead code.  
 
 ## ℹ️ Project Information
 

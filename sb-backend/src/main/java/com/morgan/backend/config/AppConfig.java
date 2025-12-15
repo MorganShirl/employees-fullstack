@@ -25,9 +25,12 @@ public class AppConfig {
                                           PasswordEncoder passwordEncoder) {
         return args -> {
             if (employeeRepository.count() == 0) {
-                employeeRepository.save(new Employee("Morgan", "SHIRLEY", "Senior full stack developer"));
-                employeeRepository.save(new Employee("Bilbo", "Baggins", "burglar"));
-                employeeRepository.save(new Employee("Frodo", "Tolkien", "thief"));
+                employeeRepository.save(new Employee("Morgan", "SHIRLEY", "Senior fullstack developer"));
+                employeeRepository.save(new Employee("Alex", "Martin", "Backend developer"));
+                employeeRepository.save(new Employee("Emily", "Carter", "Frontend developer"));
+                employeeRepository.save(new Employee("Sarah", "Thompson", "Business analyst"));
+                employeeRepository.save(new Employee("Michael", "Reed", "Product owner"));
+                employeeRepository.save(new Employee("Laura", "Bennett", "Project manager"));
                 employeeRepository.findAll()
                     .forEach(employee -> log.info("Preloaded employee {}", employee));
             }
@@ -35,11 +38,11 @@ public class AppConfig {
             if (userAccountRepository.count() == 0) {
                 String rawPassword1 = "pwd1"; // for demo only
                 String hash1 = passwordEncoder.encode(rawPassword1);
-                UserAccount user1 = new UserAccount("morgan", "morgan@email.com", hash1);
+                UserAccount user1 = new UserAccount("Morgan", "morgan@email.com", hash1);
 
                 String rawPassword2 = "pwd2"; // for demo only
                 String hash2 = passwordEncoder.encode(rawPassword2);
-                UserAccount user2 = new UserAccount("mark", "mark@email.com", hash2);
+                UserAccount user2 = new UserAccount("Mark", "mark@email.com", hash2);
 
                 userAccountRepository.saveAll(List.of(user1, user2));
             }

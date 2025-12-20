@@ -110,7 +110,7 @@ The frontend can also be run independently and communicate with the backend, mak
 ### 🧱 Building the project
 It is better to build the project using the Maven Wrapper to ensure that the correct Maven version is used (see [maven-wrapper.properties](.mvn/wrapper/maven-wrapper.properties)).  
 
-These commands are for Windows:  
+Commands on Windows:  
 ```bash
    cd ./employees-fullstack/
 ```
@@ -118,7 +118,7 @@ These commands are for Windows:
    ./mvnw.cmd clean install
 ```
 
-On a Linux machine you can use:  
+On a Linux machine:  
 ```bash
    ./mvnw clean install
 ```
@@ -194,31 +194,33 @@ The h2 console is available here:
 [http://localhost:4200/](http://localhost:4200/)
 
 #### 1. Run without the Angular proxy (direct backend calls — CORS enabled)
-This mode makes the browser call the backend at `http://localhost:8090` directly from `http://localhost:4200`, so the origins are different.  
-You will see real CORS preflight (`OPTIONS`) requests in the network tab of Chrome DevTools.  
-If you remove http://localhost:4200 from `app.cors.allowed-origins` in [application.yml](./sb-backend/src/main/resources/application.yml), 
-you will see CORS errors.
 
 ```bash
    ng serve
 ```
 
 Or you can run the frontend using the IntelliJ run configuration provided in the `.idea/runConfigurations` folder.  
-👉 [employees-ui \[CORS\]](./.idea/runConfigurations/employees_ui__CORS_.xml)
+👉 [employees-ui \[CORS\]](./.idea/runConfigurations/employees_ui__CORS_.xml). 
+
+This mode makes the browser call the backend at `http://localhost:8090` directly from `http://localhost:4200`, so the origins are different.  
+You will see real CORS preflight (`OPTIONS`) requests in the network tab of Chrome DevTools.  
+If you remove http://localhost:4200 from `app.cors.allowed-origins` in [application.yml](./sb-backend/src/main/resources/application.yml), 
+you will see CORS errors.
 
 #### 2. Run with the Angular proxy (no CORS)
-This mode proxies all /api calls from the Angular dev server to http://localhost:8090,
-so the browser never makes cross-origin requests.  
-You will see **no** CORS preflight (`OPTIONS`) requests.
-
-This mirrors the behavior obtained when the application is served directly by the backend at http://localhost:8090 after a Maven build.
 
 ```bash
 ng serve --configuration=proxy
 ```
 
 Or you can run the frontend using the IntelliJ run configuration provided in the `.idea/runConfigurations` folder.  
-👉 [employees-ui \[start proxy - no CORS\]](./.idea/runConfigurations/employees_ui__start_proxy___no_CORS_.xml)
+👉 [employees-ui \[start proxy - no CORS\]](./.idea/runConfigurations/employees_ui__start_proxy___no_CORS_.xml). 
+
+This mode proxies all /api calls from the Angular dev server to http://localhost:8090,
+so the browser never makes cross-origin requests.  
+You will see **no** CORS preflight (`OPTIONS`) requests.
+
+This mirrors the behavior obtained when the application is served directly by the backend at http://localhost:8090 after a Maven build.
 
 ### 🚧 404 handling
 http://localhost:8090/api/employees/99  

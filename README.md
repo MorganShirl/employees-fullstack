@@ -13,9 +13,9 @@ https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 
 ## 🧭 Who this project is for
 
-- Developers looking for a modern, opinionated reference to transition to current Spring Boot and Angular practices
-- Teams needing a clean baseline to bootstrap a greenfield fullstack application
-- Anyone who wants a production-oriented starting point without scaffolding noise, unnecessary abstractions, or framework gimmicks
+- Upgraders: Developers moving to the latest Spring Boot and Angular standards.
+- Starters: Teams needing a clean, production-ready baseline for new projects.
+- Minimalists: Anyone who wants a "no-fluff" setup using modern best practices.
 
 ## 🎯 Project Goal
 

@@ -13,9 +13,9 @@ https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 
 ## 🧭 Who this project is for
 
-- The Upgrader: Developers transitioning to the latest Spring Boot and Angular standards.
-- The Architect: Teams needing a clean, production-ready baseline for new projects.
-- The Minimalist: Anyone who wants a "no-fluff" setup using modern best practices.
+- **The Upgrader**: Developers transitioning to the latest Spring Boot and Angular standards.
+- **The Architect**: Teams needing a clean, production-ready baseline for new projects.
+- **The Minimalist**: Anyone who wants a "no-fluff" setup using modern best practices.
 
 ## 🎯 Project Goal
 

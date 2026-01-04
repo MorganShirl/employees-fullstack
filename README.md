@@ -14,7 +14,7 @@ https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 ## 💻 Source code
 
 The complete source code is available on GitHub:
-https://github.com/MorganShirl/employees-fullstack
+[https://github.com/MorganShirl/employees-fullstack](https://github.com/MorganShirl/employees-fullstack)
 
 ## 🧭 Who this project is for
 

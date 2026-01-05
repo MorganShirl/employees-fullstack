@@ -7,7 +7,7 @@ https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 ![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
 ![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white)
 
-![Application screenshot](.screenshots/screen_1.png)
+![Application screenshot](https://raw.githubusercontent.com/MorganShirl/employees-fullstack/main/.screenshots/screen_1.png)
 
 ---
 

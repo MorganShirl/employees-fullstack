@@ -1,4 +1,4 @@
-# Full-stack Reference Application (Spring Boot 4 · Java 25 · Angular 20)
+# Full-stack Example / Reference Application (Spring Boot 4 · Java 25 · Angular 20)
 [![CI](https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml/badge.svg)](
 https://github.com/MorganShirl/employees-fullstack/actions/workflows/maven.yml
 )
@@ -24,7 +24,7 @@ The complete source code is available on GitHub:
 
 ## 🎯 Project Goal
 
-This project is a **minimal but production-oriented reference application** intended to kickstart modern full-stack development.
+This project is a **minimal but production-oriented starter kit and reference application** intended to kickstart modern full-stack development.
 
 It demonstrates real-world security concerns, including:
 

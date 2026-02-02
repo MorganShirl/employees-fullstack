@@ -24,7 +24,7 @@ The complete source code is available on GitHub:
 
 ## 🎯 Project Goal
 
-This project is a **minimal but production-oriented starter kit and reference application** intended to kickstart modern full-stack development.
+This project is a **minimal but production-oriented starter kit / reference application** intended to kickstart modern full-stack development.
 
 It demonstrates real-world security concerns, including:
 

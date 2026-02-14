@@ -11,8 +11,14 @@ name: CI
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - '.screenshots/**'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - '.screenshots/**'
     
 permissions:
   contents: read

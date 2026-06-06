@@ -24,23 +24,22 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // ────────────────────────────────────────────────────────────────────────
     @ExceptionHandler(NotFoundException.class)
     public ProblemDetail handleNotFound(NotFoundException ex) {
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
             HttpStatus.NOT_FOUND,
             ex.getMessage()
         );
-        problem.setTitle("Resource Not Found");
-        return problem; // Spring Boot 3 automatically wraps ProblemDetail in a ResponseEntity
+        problemDetail.setTitle("Resource Not Found");
+        return problemDetail; // Spring Boot 4 automatically wraps ProblemDetail in a ResponseEntity
     }
 
     // ────────────────────────────────────────────────────────────────────────
     // 2. Override Standard Validation
     // ────────────────────────────────────────────────────────────────────────
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-        MethodArgumentNotValidException ex,
-        HttpHeaders headers,
-        HttpStatusCode status,
-        WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatusCode status,
+                                                                  WebRequest request) {
 
         // Let Spring create the basic ProblemDetail for us
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, "Validation failed for request.");
@@ -66,11 +65,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handleGlobalException(Exception ex) {
         log.error("An unexpected error occurred", ex);
 
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
             HttpStatus.INTERNAL_SERVER_ERROR,
             "An internal server error occurred. Please contact support."
         );
-        problem.setTitle("Internal Server Error");
-        return problem;
+        problemDetail.setTitle("Internal Server Error");
+        return problemDetail;
     }
 }

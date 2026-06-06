@@ -47,7 +47,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto newEmployeeDto) {
         log.info("Request createEmployee [newEmployeeDto={}]", newEmployeeDto);
         Employee toSave = employeeMapper.toEntity(newEmployeeDto);
-        Employee saved  = employeeService.create(toSave); // evicts caches
+        Employee saved = employeeService.create(toSave); // evicts caches
         URI location = URI.create("/api/employees/" + saved.getId());
         return ResponseEntity.created(location).body(employeeMapper.toDto(saved));
     }

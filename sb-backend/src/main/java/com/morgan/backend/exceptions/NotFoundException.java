@@ -13,4 +13,10 @@ public abstract class NotFoundException extends RuntimeException {
             super(format("Could not find employee with id [=%s]", id));
         }
     }
+
+    public static class UserNotFoundException extends NotFoundException {
+        public UserNotFoundException(String username) {
+            super(format("Authenticated user not found in DB [=%s]", username));
+        }
+    }
 }

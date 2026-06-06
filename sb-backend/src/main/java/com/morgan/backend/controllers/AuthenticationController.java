@@ -1,6 +1,7 @@
 package com.morgan.backend.controllers;
 
 import com.morgan.backend.entities.UserAccount;
+import com.morgan.backend.exceptions.NotFoundException.UserNotFoundException;
 import com.morgan.backend.repositories.UserAccountRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -94,7 +95,7 @@ public class AuthenticationController {
 
             // Get full user from DB so we have email
             UserAccount user = userAccountRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalStateException("Authenticated user not found in DB: " + username));
+                .orElseThrow(() -> new UserNotFoundException(username));
 
             // You can enrich the response with roles, etc.
             LoginResponseDto response = new LoginResponseDto(user.getUsername(), user.getEmail());

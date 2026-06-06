@@ -29,7 +29,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
             .allowedOrigins(corsConfigProperties.allowedOrigins().toArray(String[]::new)) // Access-Control-Allow-Origin: http://localhost:4200
             .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-            .allowedHeaders("*")
+            .allowedHeaders("Content-Type", "X-XSRF-TOKEN")
             .allowCredentials(true) // Access-Control-Allow-Credentials: true
             .maxAge(3600); // how long in seconds the response from a pre-flight request can be cached by clients
     }

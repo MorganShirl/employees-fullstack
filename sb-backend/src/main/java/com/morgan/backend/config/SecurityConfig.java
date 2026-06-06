@@ -74,11 +74,13 @@ public class SecurityConfig {
                     "/error"
                 ).permitAll()
 
-                // secure your REST API
-                .requestMatchers("/api/auth/logout").authenticated()
-                .requestMatchers("/api/auth/current-user").authenticated()
-                .requestMatchers("/api/auth/csrf").authenticated()
-                .requestMatchers("/api/employees/**").authenticated()
+                // protected endpoints
+                .requestMatchers(
+                    "/api/auth/logout",
+                    "/api/auth/current-user",
+                    "/api/auth/csrf",
+                    "/api/employees/**")
+                .authenticated()
 
                 // everything else = SPA / static → public
                 .anyRequest().permitAll()
@@ -106,13 +108,12 @@ public class SecurityConfig {
         return username -> userAccountRepository.findByUsername(username)
             .map(user -> {
                 // adapt to your UserAccount entity fields
-                // example: role "USER" for everyone for now
-                UserDetails details = User
+                // role "USER" for everyone for now
+                return User
                     .withUsername(user.getUsername())
                     .password(user.getPasswordHash())
                     .roles("USER")
                     .build();
-                return details;
             })
             .orElseThrow(() ->
                 new UsernameNotFoundException("User not found: " + username));

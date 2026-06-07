@@ -185,8 +185,11 @@ To stop the containers AND delete all data stored in the `postgres-employees-dat
    docker compose down -v
 ```
 
+#### Logs
+The logs are stored in `${user.home}/.employees-fullstack/logs`
+
 #### Run the backend with the default h2 profile
-With the default profile, the data is stored in a h2 db in `./employees-fullstack/data`
+With the default profile, the data is stored in a h2 db in `~/.employees-fullstack/data/employees_db`
 
 The h2 console is available here:  
 [http://localhost:8090/h2](http://localhost:8090/h2)

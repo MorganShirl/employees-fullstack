@@ -1,7 +1,5 @@
 # General
 **/target/
-**/logs/
-**/data/
 
 # Frontend
 **/frontendPlugin/

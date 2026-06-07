@@ -22,8 +22,8 @@
     <springProperty name="CACHE_LEVEL" source="logging-level.cache" defaultValue="DEBUG"/>
     <springProperty name="SQL_LEVEL" source="logging-level.sql" defaultValue="DEBUG"/>
 
-    <!-- Logs directory relative to sb-backend module -->
-    <property name="LOG_DIR" value="./logs"/>
+    <!-- Logs directory -->
+    <property name="LOG_DIR" value="${user.home}/.employees-fullstack/logs"/>
 
     <!-- Base pattern (used by both app.log and sql.log) -->
     <!-- Includes MDC requestId: %X{requestId} -->

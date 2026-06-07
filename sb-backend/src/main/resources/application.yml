@@ -26,9 +26,10 @@ spring:
         web-allow-others: false # only accessible from localhost
       path: /h2
   datasource:
+    # ~ is the user directory
     # AUTO_SERVER=TRUE → allows multiple processes (Spring Boot, H2 console, IntelliJ inspector) to connect
     # DB_CLOSE_DELAY=-1 → DB stays alive even if all connections close
-    url: jdbc:h2:file:./data/employees_db;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:~/.employees-fullstack/data/employees_db;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
     username: sa
     password:
